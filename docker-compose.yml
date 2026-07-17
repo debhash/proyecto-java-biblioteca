@@ -1,0 +1,11 @@
+services:
+  biblioteca:
+    build: .
+    ports:
+      - "8080:8080"
+    volumes:
+      - biblioteca_data:/data
+    container_name: biblioteca-digital
+
+volumes:
+  biblioteca_data:
