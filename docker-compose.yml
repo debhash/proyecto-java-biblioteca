@@ -1,11 +1,11 @@
 services:
-  biblioteca:
+  library:
     build: .
     ports:
       - "8080:8080"
     volumes:
-      - biblioteca_data:/data
-    container_name: biblioteca-digital
+      - library_data:/data
+    container_name: digital-library
 
 volumes:
-  biblioteca_data:
+  library_data:

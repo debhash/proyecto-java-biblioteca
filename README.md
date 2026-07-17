@@ -25,7 +25,7 @@ Desarrollada con Jakarta EE 10 (Servlets + JSP + JSTL), JDBC, H2 y patron MVC + 
 ## Estructura de paquetes
 
 ```
-src/main/java/cl/untec/biblioteca
+src/main/java/cl/untec/library
 ├── controller/   # Servlets (LoginServlet, LogoutServlet, BookServlet, LoanServlet)
 ├── dao/          # Acceso a datos con JDBC (UserDAO, BookDAO, LoanDAO)
 ├── filter/       # Filtros (AuthenticationFilter)
@@ -84,7 +84,7 @@ mvn clean package
 El archivo generado queda en:
 
 ```
-target/biblioteca-digital.war
+target/digital-library.war
 ```
 
 ## Desplegar con Docker
@@ -115,13 +115,13 @@ Este comando:
 
 1. Construye la imagen segun el `Dockerfile` (compila el WAR y lo despliega
    en Tomcat 10.1 sobre JDK 25).
-2. Levanta el servicio `biblioteca` en segundo plano.
-3. Crea el volumen `biblioteca_data` para persistir la base H2.
+2. Levanta el servicio `library` en segundo plano.
+3. Crea el volumen `library_data` para persistir la base H2.
 
 Para ver los logs en tiempo real:
 
 ```bash
-docker compose logs -f biblioteca
+docker compose logs -f library
 ```
 
 Para detener el servicio:
@@ -136,36 +136,36 @@ Si prefiere usar los comandos `docker` directamente:
 
 ```bash
 # Construir la imagen
-docker build -t biblioteca-digital:1.0 .
+docker build -t digital-library:0.0.2 .
 
 # Crear un volumen para persistir la base de datos
-docker volume create biblioteca_data
+docker volume create library_data
 
 # Ejecutar el contenedor
 docker run -d \
-    --name biblioteca-digital \
+    --name digital-library \
     -p 8080:8080 \
-    -v biblioteca_data:/data \
-    biblioteca-digital:1.0
+    -v library_data:/data \
+    digital-library:0.0.2
 ```
 
 Comandos utiles:
 
 ```bash
 # Ver logs
-docker logs -f biblioteca-digital
+docker logs -f digital-library
 
 # Detener el contenedor
-docker stop biblioteca-digital
+docker stop digital-library
 
 # Eliminar el contenedor (conservando el volumen con los datos)
-docker rm biblioteca-digital
+docker rm digital-library
 
 # Reiniciar el contenedor
-docker restart biblioteca-digital
+docker restart digital-library
 ```
 
-> Si elimina el volumen con `docker volume rm biblioteca_data`, los datos
+> Si elimina el volumen con `docker volume rm library_data`, los datos
 > de la biblioteca (usuarios, libros y prestamos) se perderan de forma
 > permanente.
 
@@ -173,7 +173,7 @@ docker restart biblioteca-digital
 
 Una vez que el contenedor este corriendo, la aplicacion queda disponible en:
 
-- `http://localhost:8080/`
+- `http://localhost:8080/digital-library`
 
 El puerto `8080` del contenedor se mapea al `8080` del host. Para cambiarlo
 edite la linea `ports` del `docker-compose.yml` o el flag `-p` del comando
@@ -192,15 +192,15 @@ Ejemplo aplicado al `docker-compose.yml`:
 
 ```yaml
 services:
-  biblioteca:
+  library:
     build: .
     ports:
       - "8080:8080"
     volumes:
-      - biblioteca_data:/data
+      - library_data:/data
     environment:
       - JAVA_OPTS=-Xms256m -Xmx512m
-    container_name: biblioteca-digital
+    container_name: digital-library
 ```
 
 ### Limpieza completa
@@ -218,25 +218,25 @@ docker compose down --rmi all -v
 
 1. Asegurarse de que `JAVA_HOME` y `JRE_HOME` de Tomcat apunten al JDK 25.
 2. Detener Tomcat (`bin/shutdown.sh` o desde el `Services` panel en Windows).
-3. Copiar `target/biblioteca-digital.war` a la carpeta `webapps` de Tomcat.
+3. Copiar `target/digital-library.war` a la carpeta `webapps` de Tomcat.
 4. Iniciar Tomcat (`bin/startup.sh` o `bin/startup.bat`).
 5. Acceder desde el navegador a:
-   - `http://localhost:8080/biblioteca-digital/`
+   - `http://localhost:8080/digital-library/`
 
 ### Opcion B: mediante Tomcat Manager
 
 1. Configurar un usuario con rol `manager-gui` en `conf/tomcat-users.xml`.
 2. Iniciar Tomcat y entrar a `http://localhost:8080/manager/html`.
-3. En la seccion `WAR file to deploy`, seleccionar `biblioteca-digital.war`.
+3. En la seccion `WAR file to deploy`, seleccionar `digital-library.war`.
 4. Presionar `Deploy`.
 5. Acceder a la aplicacion desde el enlace mostrado en la lista.
 
 ## Patron MVC
 
-- **Modelo**: clases POJO en `cl.untec.biblioteca.model`.
+- **Modelo**: clases POJO en `cl.untec.library.model`.
 - **Vista**: JSP + JSTL en `src/main/webapp/WEB-INF/views/`. No contienen codigo Java ni JDBC.
-- **Controlador**: Servlets en `cl.untec.biblioteca.controller` reciben la peticion HTTP, llaman a los DAO y reenvian a la vista correspondiente con `RequestDispatcher`.
-- **Acceso a datos**: DAOs en `cl.untec.biblioteca.dao` que usan JDBC a traves de `DatabaseConnection`.
+- **Controlador**: Servlets en `cl.untec.library.controller` reciben la peticion HTTP, llaman a los DAO y reenvian a la vista correspondiente con `RequestDispatcher`.
+- **Acceso a datos**: DAOs en `cl.untec.library.dao` que usan JDBC a traves de `DatabaseConnection`.
 
 ## Patron DAO
 
