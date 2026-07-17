@@ -14,19 +14,14 @@ Desarrollada con Jakarta EE 10 (Servlets + JSP + JSTL), JDBC, H2 y patron MVC + 
 - H2 Database 2.2 (modo archivo)
 - Apache Maven 3.9 o superior (requerido para compilar con Java 25)
 - Apache Tomcat 10.1
-- HTML + CSS basico (sin frameworks externos)
+- HTML + Bootstrap 5
 
 ## Requisitos previos
 
 - **JDK 25 LTS** (Temurin, Oracle, Zulu u otro) instalado y configurado en `PATH` y `JAVA_HOME`.
 - Apache Maven 3.9 o superior (3.9.16 es la version minima verificada con este proyecto).
 - Apache Tomcat 10.1.x (soporta el namespace `jakarta.*` y se ejecuta correctamente sobre JDK 25).
-- Eclipse IDE for Enterprise Java and Web Developers (opcional, recomendado para el curso).
-
-> El `pom.xml` declara `<release>25</release>` y el `maven-compiler-plugin` 3.13.0,
-> por lo que **no es posible compilar el proyecto con un JDK anterior a 25**.
-> Verifique su version con `java -version` antes de generar el WAR.
-
+  s
 ## Estructura de paquetes
 
 ```
@@ -78,29 +73,6 @@ src/main/java/cl/untec/biblioteca
 | LIBRARIAN | `luis@untec.cl`          | `admin123`      |
 | STUDENT   | `bruce@untec.cl`         | `estudiante123` |
 
-> Importante: las contrasenas se almacenan en texto plano unicamente con fines
-> academicos. En una aplicacion real se debe almacenar un hash seguro
-> (por ejemplo BCrypt o Argon2) y nunca la contrasena en claro.
-
-## Como ejecutar el proyecto en Eclipse
-
-1. **Configurar el JDK 25 en Eclipse**
-   - `Window > Preferences > Java > Installed JREs > Add > Standard VM`.
-   - Apuntar a la carpeta de instalacion del JDK 25 y marcarlo como **default**.
-2. **Importar el proyecto**
-   - `File > Import > Maven > Existing Maven Projects`.
-   - Seleccionar la carpeta raiz del proyecto (`biblioteca-digital`).
-   - Verificar que Eclipse detecta `Java 25` como nivel de compilador en las propiedades del proyecto.
-3. **Configurar Tomcat 10.1**
-   - `Window > Preferences > Server > Runtime Environments > Add`.
-   - Elegir `Apache Tomcat v10.1` y apuntar a la carpeta de instalacion.
-4. **Agregar el proyecto al servidor**
-   - En la vista `Servers`, click derecho sobre Tomcat > `Add and Remove`.
-   - Agregar `biblioteca-digital`.
-5. **Iniciar la aplicacion**
-   - Click derecho sobre el servidor > `Start` (o `Debug`).
-   - Visitar: `http://localhost:8080/biblioteca-digital/`.
-
 ## Generar el archivo WAR
 
 Desde la raiz del proyecto:
@@ -114,29 +86,6 @@ El archivo generado queda en:
 ```
 target/biblioteca-digital.war
 ```
-
-> Si su `JAVA_HOME` apunta a otra version de Java, Maven mostrara un error
-> indicando que el release 25 no es soportado. Ajuste la variable de entorno
-> antes de ejecutar el comando.
-
-## Desplegar en Apache Tomcat
-
-### Opcion A: copiar el WAR a la carpeta `webapps`
-
-1. Asegurarse de que `JAVA_HOME` y `JRE_HOME` de Tomcat apunten al JDK 25.
-2. Detener Tomcat (`bin/shutdown.sh` o desde el `Services` panel en Windows).
-3. Copiar `target/biblioteca-digital.war` a la carpeta `webapps` de Tomcat.
-4. Iniciar Tomcat (`bin/startup.sh` o `bin/startup.bat`).
-5. Acceder desde el navegador a:
-   - `http://localhost:8080/biblioteca-digital/`
-
-### Opcion B: mediante Tomcat Manager
-
-1. Configurar un usuario con rol `manager-gui` en `conf/tomcat-users.xml`.
-2. Iniciar Tomcat y entrar a `http://localhost:8080/manager/html`.
-3. En la seccion `WAR file to deploy`, seleccionar `biblioteca-digital.war`.
-4. Presionar `Deploy`.
-5. Acceder a la aplicacion desde el enlace mostrado en la lista.
 
 ## Desplegar con Docker
 
@@ -262,6 +211,25 @@ si nunca se hubiera desplegado):
 ```bash
 docker compose down --rmi all -v
 ```
+
+## Desplegar en Apache Tomcat
+
+### Opcion A: copiar el WAR a la carpeta `webapps`
+
+1. Asegurarse de que `JAVA_HOME` y `JRE_HOME` de Tomcat apunten al JDK 25.
+2. Detener Tomcat (`bin/shutdown.sh` o desde el `Services` panel en Windows).
+3. Copiar `target/biblioteca-digital.war` a la carpeta `webapps` de Tomcat.
+4. Iniciar Tomcat (`bin/startup.sh` o `bin/startup.bat`).
+5. Acceder desde el navegador a:
+   - `http://localhost:8080/biblioteca-digital/`
+
+### Opcion B: mediante Tomcat Manager
+
+1. Configurar un usuario con rol `manager-gui` en `conf/tomcat-users.xml`.
+2. Iniciar Tomcat y entrar a `http://localhost:8080/manager/html`.
+3. En la seccion `WAR file to deploy`, seleccionar `biblioteca-digital.war`.
+4. Presionar `Deploy`.
+5. Acceder a la aplicacion desde el enlace mostrado en la lista.
 
 ## Patron MVC
 
