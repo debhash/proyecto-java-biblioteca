@@ -34,3 +34,5 @@ logs/
 
 .env
 *.local.properties
+
+doc/
