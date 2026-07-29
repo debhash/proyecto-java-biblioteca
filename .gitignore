@@ -8,7 +8,6 @@ target/
 *.jar
 !**/lib/*.jar
 
-library/
 *.mv.db
 *.trace.db
 

@@ -250,6 +250,6 @@ Cada tabla tiene su propio DAO que centraliza todas las consultas SQL:
 
 `LoanDAO.registerLoan` y `LoanDAO.registerReturn` desactivan el auto-commit, ejecutan dos operaciones (insertar/marcar devuelto y actualizar disponibilidad) y hacen `commit`/`rollback` segun corresponda, garantizando que no queden datos inconsistentes.
 
-## Filtro de autenticacion
+## Despliegue y acceso
 
-`AuthenticationFilter` intercepta todas las peticiones. Permite el acceso publico solo a `/login`, `/logout`, `/`, `/index.jsp` y archivos estaticos (`/css/...`, `/js/...`, `/images/...`). Si no hay sesion activa, redirige al login.
+La aplicacion se despliega como archivo `WAR` en Apache Tomcat 10.1. El acceso publico queda centrado en `/login` y `index.jsp`, mientras que las rutas principales requieren sesion activa en los servlets.

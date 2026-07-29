@@ -1,23 +1,22 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee
+<?xml version="1.0" encoding="UTF-8" ?>
+<web-app
+  xmlns="https://jakarta.ee/xml/ns/jakartaee"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee
                              https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
-         version="6.0">
+  version="6.0"
+>
 
     <display-name>Biblioteca Digital UNTEC</display-name>
 
-    <!-- Pagina de bienvenida que redirige al login. -->
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
 
-    <!-- Configuracion de sesion: 30 minutos de inactividad. -->
     <session-config>
         <session-timeout>30</session-timeout>
     </session-config>
 
-    <!-- Codificacion UTF-8 en todo el contexto. -->
     <jsp-config>
         <jsp-property-group>
             <url-pattern>*.jsp</url-pattern>
