@@ -19,9 +19,9 @@ Desarrollada con Jakarta EE 10 (Servlets + JSP + JSTL), JDBC, H2 y patron MVC + 
 ## Requisitos previos
 
 - **JDK 25 LTS** (Temurin, Oracle, Zulu u otro) instalado y configurado en `PATH` y `JAVA_HOME`.
-- Apache Maven 3.9 o superior (3.9.16 es la version minima verificada con este proyecto).
+  Apache Maven 3.9 o superior (3.9.16 es la version minima verificada con este proyecto).
 - Apache Tomcat 10.1.x (soporta el namespace `jakarta.*` y se ejecuta correctamente sobre JDK 25).
-  s
+
 ## Estructura de paquetes
 
 ```
@@ -38,7 +38,7 @@ src/main/java/cl/untec/library
 ### Tabla `app_user`
 
 | Campo    | Tipo            | Descripcion                 |
-|----------|-----------------|-----------------------------|
+| -------- | --------------- | --------------------------- |
 | id       | BIGINT PK       | Identificador unico         |
 | name     | VARCHAR(100)    | Nombre completo             |
 | email    | VARCHAR(120) UK | Email de acceso             |
@@ -47,31 +47,31 @@ src/main/java/cl/untec/library
 
 ### Tabla `book`
 
-| Campo     | Tipo            | Descripcion                   |
-|-----------|-----------------|-------------------------------|
-| id        | BIGINT PK       | Identificador unico           |
-| title     | VARCHAR(200)    | Titulo del libro              |
-| author    | VARCHAR(150)    | Autor                         |
-| isbn      | VARCHAR(50)     | Codigo ISBN                   |
-| available | BOOLEAN         | true si esta en la biblioteca |
+| Campo     | Tipo         | Descripcion                   |
+| --------- | ------------ | ----------------------------- |
+| id        | BIGINT PK    | Identificador unico           |
+| title     | VARCHAR(200) | Titulo del libro              |
+| author    | VARCHAR(150) | Autor                         |
+| isbn      | VARCHAR(50)  | Codigo ISBN                   |
+| available | BOOLEAN      | true si esta en la biblioteca |
 
 ### Tabla `loan`
 
-| Campo       | Tipo        | Descripcion                          |
-|-------------|-------------|--------------------------------------|
-| id          | BIGINT PK   | Identificador unico                  |
-| user_id     | BIGINT FK   | Usuario que solicita el prestamo     |
-| book_id     | BIGINT FK   | Libro prestado                       |
-| loan_date   | DATE        | Fecha del prestamo                   |
-| return_date | DATE NULL   | Fecha en que se devolvio (si aplica) |
-| returned    | BOOLEAN     | true cuando se devolvio              |
+| Campo       | Tipo      | Descripcion                          |
+| ----------- | --------- | ------------------------------------ |
+| id          | BIGINT PK | Identificador unico                  |
+| user_id     | BIGINT FK | Usuario que solicita el prestamo     |
+| book_id     | BIGINT FK | Libro prestado                       |
+| loan_date   | DATE      | Fecha del prestamo                   |
+| return_date | DATE NULL | Fecha en que se devolvio (si aplica) |
+| returned    | BOOLEAN   | true cuando se devolvio              |
 
 ## Credenciales de prueba
 
-| Rol       | Email                    | Contrasena      |
-|-----------|--------------------------|-----------------|
-| LIBRARIAN | `luis@untec.cl`          | `admin123`      |
-| STUDENT   | `bruce@untec.cl`         | `estudiante123` |
+| Rol       | Email            | Contrasena      |
+| --------- | ---------------- | --------------- |
+| LIBRARIAN | `luis@untec.cl`  | `admin123`      |
+| STUDENT   | `bruce@untec.cl` | `estudiante123` |
 
 ## Generar el archivo WAR
 
@@ -184,9 +184,9 @@ edite la linea `ports` del `docker-compose.yml` o el flag `-p` del comando
 Variables de entorno utiles que pueden definirse en el bloque
 `environment` del `docker-compose.yml` o con `-e` en `docker run`:
 
-| Variable      | Default              | Descripcion                                |
-|---------------|----------------------|--------------------------------------------|
-| `JAVA_OPTS`   | *(vacio)*            | Flags de JVM, por ejemplo `-Xms256m -Xmx512m` |
+| Variable    | Default   | Descripcion                                   |
+| ----------- | --------- | --------------------------------------------- |
+| `JAVA_OPTS` | _(vacio)_ | Flags de JVM, por ejemplo `-Xms256m -Xmx512m` |
 
 Ejemplo aplicado al `docker-compose.yml`:
 
@@ -241,6 +241,7 @@ docker compose down --rmi all -v
 ## Patron DAO
 
 Cada tabla tiene su propio DAO que centraliza todas las consultas SQL:
+
 - `UserDAO`: buscar por credenciales, por id, listar estudiantes.
 - `BookDAO`: listar, buscar, crear, actualizar, eliminar y cambiar disponibilidad.
 - `LoanDAO`: listar, listar por usuario, registrar prestamo y devolucion (con transaccion JDBC).
