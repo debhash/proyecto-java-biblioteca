@@ -11,6 +11,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * DAO encargado de la tabla loan.
+ * Sus operaciones de préstamo y devolución se ejecutan dentro de transacciones JDBC para evitar datos inconsistentes.
+ */
 public class LoanDAO {
 
   private final BookDAO bookDAO = new BookDAO();
@@ -26,6 +30,11 @@ public class LoanDAO {
   private static final String SQL_UPDATE_RETURN =
     "UPDATE loan SET return_date = ?, returned = TRUE WHERE id = ?";
 
+  /**
+   * Lista todos los préstamos del sistema.
+   *
+   * @return listado de préstamos con datos de usuario y libro.
+   */
   public List<Loan> findAll() {
     List<Loan> loans = new ArrayList<>();
     try (
@@ -42,6 +51,12 @@ public class LoanDAO {
     return loans;
   }
 
+  /**
+   * Lista los préstamos de un usuario específico.
+   *
+   * @param userId id del usuario.
+   * @return préstamos asociados al usuario.
+   */
   public List<Loan> findByUser(Long userId) {
     List<Loan> loans = new ArrayList<>();
     try (
@@ -62,6 +77,13 @@ public class LoanDAO {
     return loans;
   }
 
+  /**
+   * Registra un préstamo nuevo y baja la disponibilidad del libro en la misma transacción.
+   *
+   * @param userId id del usuario que toma el préstamo.
+   * @param bookId id del libro a prestar.
+   * @return {@code true} si el préstamo se creó correctamente.
+   */
   public boolean registerLoan(Long userId, Long bookId) {
     try (Connection connection = DatabaseConnection.getConnection()) {
       connection.setAutoCommit(false);
@@ -95,6 +117,12 @@ public class LoanDAO {
     }
   }
 
+  /**
+   * Registra la devolución de un préstamo y vuelve a dejar disponible el libro.
+   *
+   * @param loanId id del préstamo.
+   * @return {@code true} si la devolución se registró con éxito.
+   */
   public boolean registerReturn(Long loanId) {
     try (Connection connection = DatabaseConnection.getConnection()) {
       connection.setAutoCommit(false);
@@ -142,6 +170,13 @@ public class LoanDAO {
     }
   }
 
+  /**
+   * Convierte una fila con joins en un objeto Loan con datos legibles para la vista.
+   *
+   * @param resultSet resultado de la consulta.
+   * @return préstamo mapeado.
+   * @throws SQLException si falla la lectura de columnas.
+   */
   private Loan mapWithJoin(ResultSet resultSet) throws SQLException {
     Loan loan = mapBasic(resultSet);
     loan.setUserName(resultSet.getString("user_name"));
@@ -149,6 +184,13 @@ public class LoanDAO {
     return loan;
   }
 
+  /**
+   * Convierte una fila básica de loan en un objeto Loan.
+   *
+   * @param resultSet resultado de la consulta.
+   * @return préstamo mapeado.
+   * @throws SQLException si falla la lectura de columnas.
+   */
   private Loan mapBasic(ResultSet resultSet) throws SQLException {
     Loan loan = new Loan();
     loan.setId(resultSet.getLong("id"));

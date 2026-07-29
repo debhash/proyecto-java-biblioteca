@@ -12,6 +12,11 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 
+/**
+ * Servlet encargado de gestionar préstamos y devoluciones.
+ * El bibliotecario puede listar todos los préstamos, registrar uno nuevo y marcar devoluciones.
+ * El estudiante solo puede ver sus propios préstamos.
+ */
 @WebServlet("/loans")
 public class LoanServlet extends HttpServlet {
 
@@ -19,6 +24,14 @@ public class LoanServlet extends HttpServlet {
   private final UserDAO userDAO = new UserDAO();
   private final BookDAO bookDAO = new BookDAO();
 
+  /**
+   * Atiende peticiones GET para listar préstamos o mostrar el formulario de creación.
+   *
+   * @param request petición HTTP.
+   * @param response respuesta HTTP.
+   * @throws ServletException si falla el despacho a la vista.
+   * @throws IOException si ocurre un problema de comunicación.
+   */
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
@@ -72,6 +85,13 @@ public class LoanServlet extends HttpServlet {
     response.sendRedirect(request.getContextPath() + "/loans?action=list");
   }
 
+  /**
+   * Atiende peticiones POST para registrar préstamos y devoluciones.
+   *
+   * @param request petición HTTP con los datos del formulario.
+   * @param response respuesta HTTP.
+   * @throws IOException si falla la redirección.
+   */
   @Override
   protected void doPost(
     HttpServletRequest request,
@@ -145,10 +165,22 @@ public class LoanServlet extends HttpServlet {
     }
   }
 
+  /**
+   * Verifica si la sesión actual tiene un usuario autenticado.
+   *
+   * @param session sesión HTTP activa.
+   * @return {@code true} si hay usuario en sesión.
+   */
   private boolean isAuthenticated(HttpSession session) {
     return session != null && session.getAttribute("user") != null;
   }
 
+  /**
+   * Convierte un parámetro textual a Long de forma segura.
+   *
+   * @param value valor recibido por parámetro.
+   * @return número convertido o {@code null} si no se puede parsear.
+   */
   private Long parseLong(String value) {
     try {
       return value == null || value.isBlank() ? null : Long.parseLong(value);

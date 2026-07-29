@@ -11,11 +11,23 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 
+/**
+ * Servlet encargado de gestionar el catálogo de libros.
+ * Permite listar, crear, editar y eliminar libros, validando que solo el bibliotecario pueda modificar datos.
+ */
 @WebServlet("/books")
 public class BookServlet extends HttpServlet {
 
   private final BookDAO bookDAO = new BookDAO();
 
+  /**
+   * Atiende peticiones GET para listar libros o mostrar el formulario de creación/edición.
+   *
+   * @param request petición HTTP.
+   * @param response respuesta HTTP.
+   * @throws ServletException si falla el despacho a la vista.
+   * @throws IOException si ocurre un problema de comunicación.
+   */
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
@@ -85,6 +97,13 @@ public class BookServlet extends HttpServlet {
     response.sendRedirect(request.getContextPath() + "/books?action=list");
   }
 
+  /**
+   * Atiende peticiones POST para crear, actualizar o eliminar libros.
+   *
+   * @param request petición HTTP con los datos del formulario.
+   * @param response respuesta HTTP.
+   * @throws IOException si falla la redirección.
+   */
   @Override
   protected void doPost(
     HttpServletRequest request,
@@ -160,6 +179,12 @@ public class BookServlet extends HttpServlet {
     }
   }
 
+  /**
+   * Construye un objeto Book a partir de los campos del formulario.
+   *
+   * @param request petición HTTP con los datos del formulario.
+   * @return instancia de Book lista para persistirse.
+   */
   private Book readBookForm(HttpServletRequest request) {
     Book book = new Book();
     book.setTitle(request.getParameter("title"));
@@ -169,10 +194,22 @@ public class BookServlet extends HttpServlet {
     return book;
   }
 
+  /**
+   * Verifica si la sesión actual tiene un usuario autenticado.
+   *
+   * @param session sesión HTTP activa.
+   * @return {@code true} si hay usuario en sesión.
+   */
   private boolean isAuthenticated(HttpSession session) {
     return session != null && session.getAttribute("user") != null;
   }
 
+  /**
+   * Convierte un valor textual a Long de forma segura.
+   *
+   * @param value valor recibido por parámetro.
+   * @return número convertido o {@code null} si el dato no es válido.
+   */
   private Long parseLong(String value) {
     try {
       return value == null || value.isBlank() ? null : Long.parseLong(value);

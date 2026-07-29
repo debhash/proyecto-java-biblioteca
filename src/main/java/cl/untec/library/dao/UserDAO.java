@@ -11,6 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * DAO encargado de consultar usuarios en la base de datos.
+ * Se usa para autenticación, búsqueda por id y selección de estudiantes en el flujo de préstamos.
+ */
 public class UserDAO {
 
   private static final String SQL_FIND_BY_EMAIL_AND_PASSWORD =
@@ -20,6 +24,13 @@ public class UserDAO {
   private static final String SQL_FIND_STUDENTS =
     "SELECT id, name, email, role FROM app_user WHERE role = ? ORDER BY name";
 
+  /**
+   * Busca un usuario por correo y contraseña.
+   *
+   * @param email correo del usuario.
+   * @param password contraseña en texto plano para este proyecto educativo.
+   * @return usuario encontrado o vacío si no coincide.
+   */
   public Optional<User> findByEmailAndPassword(String email, String password) {
     try (
       Connection connection = DatabaseConnection.getConnection();
@@ -43,6 +54,12 @@ public class UserDAO {
     return Optional.empty();
   }
 
+  /**
+   * Busca un usuario por su identificador.
+   *
+   * @param id identificador interno del usuario.
+   * @return usuario encontrado o vacío si no existe.
+   */
   public Optional<User> findById(long id) {
     try (
       Connection connection = DatabaseConnection.getConnection();
@@ -60,6 +77,11 @@ public class UserDAO {
     return Optional.empty();
   }
 
+  /**
+   * Lista los usuarios con rol estudiante.
+   *
+   * @return listado de estudiantes ordenado por nombre.
+   */
   public List<User> findStudents() {
     List<User> users = new ArrayList<>();
     try (
@@ -80,6 +102,13 @@ public class UserDAO {
     return users;
   }
 
+  /**
+   * Convierte una fila de la tabla app_user en un objeto User.
+   *
+   * @param resultSet resultado de la consulta.
+   * @return usuario mapeado.
+   * @throws SQLException si ocurre un error al leer columnas.
+   */
   private User map(ResultSet resultSet) throws SQLException {
     return new User(
       resultSet.getLong("id"),

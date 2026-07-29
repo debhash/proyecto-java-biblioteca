@@ -7,6 +7,10 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
+/**
+ * Centraliza la creación de conexiones JDBC para la base de datos H2.
+ * Se apoya en el archivo {@code database.properties} que vive en resources.
+ */
 public final class DatabaseConnection {
 
   private static final String PROPERTIES_FILE = "database.properties";
@@ -14,6 +18,12 @@ public final class DatabaseConnection {
 
   private DatabaseConnection() {}
 
+  /**
+   * Obtiene una conexión JDBC lista para usar.
+   *
+   * @return conexión abierta contra la base configurada.
+   * @throws SQLException si no se puede abrir la conexión.
+   */
   public static Connection getConnection() throws SQLException {
     return DriverManager.getConnection(
       PROPERTIES.getProperty("db.url"),
@@ -22,6 +32,11 @@ public final class DatabaseConnection {
     );
   }
 
+  /**
+   * Carga las propiedades de conexión desde el classpath.
+   *
+   * @return propiedades de base de datos.
+   */
   private static Properties loadProperties() {
     Properties properties = new Properties();
     try (
@@ -30,14 +45,14 @@ public final class DatabaseConnection {
         .getResourceAsStream(PROPERTIES_FILE)
     ) {
       if (inputStream == null) {
-        throw new IllegalStateException("No se encontro database.properties.");
+        throw new IllegalStateException("No se encontró database.properties.");
       }
       properties.load(inputStream);
       Class.forName(properties.getProperty("db.driver"));
       return properties;
     } catch (IOException | ClassNotFoundException ex) {
       throw new IllegalStateException(
-        "No fue posible cargar la configuracion de base de datos.",
+        "No fue posible cargar la configuración de base de datos.",
         ex
       );
     }

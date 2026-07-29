@@ -10,6 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * DAO encargado de las operaciones sobre la tabla book.
+ * Centraliza el acceso a datos para mantener la lógica SQL fuera de los servlets.
+ */
 public class BookDAO {
 
   private static final String SQL_FIND_ALL =
@@ -26,6 +30,11 @@ public class BookDAO {
   private static final String SQL_UPDATE_AVAILABILITY =
     "UPDATE book SET available = ? WHERE id = ?";
 
+  /**
+   * Lista todos los libros del catálogo.
+   *
+   * @return listado completo de libros.
+   */
   public List<Book> findAll() {
     List<Book> books = new ArrayList<>();
     try (
@@ -42,6 +51,11 @@ public class BookDAO {
     return books;
   }
 
+  /**
+   * Lista solo los libros disponibles para préstamo.
+   *
+   * @return listado de libros disponibles.
+   */
   public List<Book> findAvailable() {
     List<Book> books = new ArrayList<>();
     try (
@@ -60,6 +74,12 @@ public class BookDAO {
     return books;
   }
 
+  /**
+   * Busca un libro por su identificador.
+   *
+   * @param id identificador del libro.
+   * @return libro encontrado o vacío.
+   */
   public Optional<Book> findById(long id) {
     try (
       Connection connection = DatabaseConnection.getConnection();
@@ -77,6 +97,12 @@ public class BookDAO {
     return Optional.empty();
   }
 
+  /**
+   * Crea un libro nuevo y devuelve el id generado.
+   *
+   * @param book libro a insertar.
+   * @return id generado por la base de datos.
+   */
   public long create(Book book) {
     try (
       Connection connection = DatabaseConnection.getConnection();
@@ -102,6 +128,12 @@ public class BookDAO {
     return 0L;
   }
 
+  /**
+   * Actualiza un libro existente.
+   *
+   * @param book libro con los datos modificados.
+   * @return {@code true} si se actualizó al menos un registro.
+   */
   public boolean update(Book book) {
     try (
       Connection connection = DatabaseConnection.getConnection();
@@ -118,6 +150,12 @@ public class BookDAO {
     }
   }
 
+  /**
+   * Elimina un libro por su id.
+   *
+   * @param id identificador del libro.
+   * @return {@code true} si se eliminó el registro.
+   */
   public boolean delete(long id) {
     try (
       Connection connection = DatabaseConnection.getConnection();
@@ -130,6 +168,14 @@ public class BookDAO {
     }
   }
 
+  /**
+   * Cambia la disponibilidad del libro dentro de una transacción externa.
+   *
+   * @param connection conexión JDBC activa.
+   * @param bookId id del libro.
+   * @param available nuevo estado.
+   * @throws SQLException si falla la actualización.
+   */
   public void updateAvailability(
     Connection connection,
     Long bookId,
@@ -146,6 +192,13 @@ public class BookDAO {
     }
   }
 
+  /**
+   * Convierte una fila de la tabla book en un objeto Book.
+   *
+   * @param resultSet resultado de la consulta.
+   * @return libro mapeado.
+   * @throws SQLException si ocurre un error al leer columnas.
+   */
   private Book map(ResultSet resultSet) throws SQLException {
     return new Book(
       resultSet.getLong("id"),
