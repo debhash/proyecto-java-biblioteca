@@ -16,22 +16,22 @@
             <div class="collapse navbar-collapse" id="mainNavbar">
                 <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/books?action=list">Catalogo</a>
+                        <a class="nav-link" href="${pageContext.request.contextPath}/books?action=list">Catálogo</a>
                     </li>
                     <c:if test="${sessionScope.user != null && sessionScope.user.isLibrarian()}">
                         <li class="nav-item">
                             <a class="nav-link" href="${pageContext.request.contextPath}/books?action=new">Nuevo libro</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="${pageContext.request.contextPath}/loans?action=list">Prestamos</a>
+                            <a class="nav-link" href="${pageContext.request.contextPath}/loans?action=list">Préstamos</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="${pageContext.request.contextPath}/loans?action=new">Registrar prestamo</a>
+                            <a class="nav-link" href="${pageContext.request.contextPath}/loans?action=new">Registrar préstamo</a>
                         </li>
                     </c:if>
                     <c:if test="${sessionScope.user != null && !sessionScope.user.isLibrarian()}">
                         <li class="nav-item">
-                            <a class="nav-link" href="${pageContext.request.contextPath}/loans?action=my-loans">Mis prestamos</a>
+                            <a class="nav-link" href="${pageContext.request.contextPath}/loans?action=my-loans">Mis préstamos</a>
                         </li>
                     </c:if>
                 </ul>
@@ -41,10 +41,10 @@
                             <span class="user-name">
                                 <c:out value="${sessionScope.user.name}"/> (${sessionScope.user.roleLabel})
                             </span>
-                            <a class="btn btn-outline-light btn-sm" href="${pageContext.request.contextPath}/logout">Cerrar sesion</a>
+                            <a class="btn btn-outline-light btn-sm" href="${pageContext.request.contextPath}/logout">Cerrar sesión</a>
                         </c:when>
                         <c:otherwise>
-                            <a class="btn btn-light btn-sm" href="${pageContext.request.contextPath}/login">Iniciar sesion</a>
+                            <a class="btn btn-light btn-sm" href="${pageContext.request.contextPath}/login">Iniciar sesión</a>
                         </c:otherwise>
                     </c:choose>
                 </div>

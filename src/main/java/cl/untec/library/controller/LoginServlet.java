@@ -9,11 +9,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Optional;
 
 /**
- * Servlet encargado de manejar el inicio de sesión de la aplicación.
- * Recibe el formulario de login, valida credenciales y guarda el usuario en la sesión cuando corresponde.
+ * Servlet para recibir el login y dejar andando la sesión del usuario.
+ * Si todo calza, el sistema lo manda al catálogo; si no, le muestro el formulario otra vez.
  */
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
@@ -21,7 +22,7 @@ public class LoginServlet extends HttpServlet {
   private final UserDAO userDAO = new UserDAO();
 
   /**
-   * Muestra el formulario de inicio de sesión.
+   * Muestro el formulario de inicio de sesión.
    *
    * @param request petición HTTP entrante.
    * @param response respuesta HTTP hacia el navegador.
@@ -37,8 +38,7 @@ public class LoginServlet extends HttpServlet {
   }
 
   /**
-   * Procesa el formulario de login y autentica al usuario contra la base de datos.
-   * Si las credenciales son válidas, guarda al usuario en sesión y redirige al catálogo.
+   * Reviso las credenciales del formulario y, si están correctas, dejo al usuario autenticado.
    *
    * @param request petición HTTP con email y contraseña.
    * @param response respuesta HTTP hacia el navegador.
@@ -51,23 +51,33 @@ public class LoginServlet extends HttpServlet {
     HttpServletResponse response
   ) throws ServletException, IOException {
     String email = request.getParameter("email");
-    String password = request.getParameter("password");
+    char[] passwordChars =
+      request.getParameter("password") == null
+        ? new char[0]
+        : request.getParameter("password").toCharArray();
 
-    Optional<User> user = userDAO.findByEmailAndPassword(email, password);
-    if (user.isEmpty()) {
-      request.setAttribute(
-        "errorMessage",
-        "Credenciales invalidas. Intente nuevamente."
+    try {
+      Optional<User> user = userDAO.findByEmailAndPassword(
+        email,
+        passwordChars
       );
-      request.setAttribute("email", email);
-      request
-        .getRequestDispatcher("/WEB-INF/views/login.jsp")
-        .forward(request, response);
-      return;
-    }
+      if (user.isEmpty()) {
+        request.setAttribute(
+          "errorMessage",
+          "Credenciales invalidas. Intente nuevamente."
+        );
+        request.setAttribute("email", email);
+        request
+          .getRequestDispatcher("/WEB-INF/views/login.jsp")
+          .forward(request, response);
+        return;
+      }
 
-    HttpSession session = request.getSession(true);
-    session.setAttribute("user", user.get());
-    response.sendRedirect(request.getContextPath() + "/books?action=list");
+      HttpSession session = request.getSession(true);
+      session.setAttribute("user", user.get());
+      response.sendRedirect(request.getContextPath() + "/books?action=list");
+    } finally {
+      Arrays.fill(passwordChars, '\0');
+    }
   }
 }

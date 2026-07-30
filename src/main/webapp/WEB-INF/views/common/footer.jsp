@@ -5,16 +5,16 @@
         <div class="row g-4">
             <div class="col-12 col-md-5">
                 <h4>Biblioteca Digital UNTEC</h4>
-                <p class="m-0">Sistema institucional de gestion y prestamo de libros para estudiantes y bibliotecarios.</p>
+                <p class="m-0">Sistema para la gestión y préstamo de libros de la biblioteca digital.</p>
             </div>
             <div class="col-6 col-md-3">
                 <h4>Navegacion</h4>
                 <ul class="list-unstyled m-0">
-                    <li class="mb-2"><a href="${pageContext.request.contextPath}/books?action=list">Catalogo</a></li>
+                    <li class="mb-2"><a href="${pageContext.request.contextPath}/books?action=list">Catálogo</a></li>
                     <c:if test="${sessionScope.user != null && sessionScope.user.isLibrarian()}">
-                        <li class="mb-2"><a href="${pageContext.request.contextPath}/loans?action=list">Prestamos</a></li>
+                        <li class="mb-2"><a href="${pageContext.request.contextPath}/loans?action=list">Préstamos</a></li>
                     </c:if>
-                    <li><a href="${pageContext.request.contextPath}/login">Iniciar sesion</a></li>
+                    <li><a href="${pageContext.request.contextPath}/login">Iniciar sesión</a></li>
                 </ul>
             </div>
             <div class="col-6 col-md-4">

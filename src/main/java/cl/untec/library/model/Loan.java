@@ -3,8 +3,8 @@ package cl.untec.library.model;
 import java.time.LocalDate;
 
 /**
- * Representa un préstamo de libro dentro de la biblioteca digital.
- * Incluye datos de negocio y algunos campos auxiliares para mostrar información legible en las vistas.
+ * Esta clase representa un préstamo de libro.
+ * También guardo algunos datos auxiliares para mostrar información más clara en pantalla.
  */
 public class Loan {
 
@@ -18,19 +18,19 @@ public class Loan {
   private String bookTitle;
 
   /**
-   * Constructor vacío necesario para mapear filas de la base de datos de forma simple.
+   * Dejo este constructor vacío para mapear filas de la base de datos con comodidad.
    */
   public Loan() {}
 
   /**
-   * Crea un préstamo con sus campos principales.
+   * Creo un préstamo con sus campos principales.
    *
    * @param id identificador del préstamo.
-   * @param userId id del usuario que hizo el préstamo.
-   * @param bookId id del libro prestado.
-   * @param loanDate fecha en que se realizó el préstamo.
-   * @param returnDate fecha de devolución, si ya existe.
-   * @param returned indica si el préstamo ya fue devuelto.
+   * @param userId id del usuario.
+   * @param bookId id del libro.
+   * @param loanDate fecha del préstamo.
+   * @param returnDate fecha de devolución.
+   * @param returned indica si ya fue devuelto.
    */
   public Loan(
     Long id,
@@ -49,7 +49,7 @@ public class Loan {
   }
 
   /**
-   * Obtiene el identificador del préstamo.
+   * Obtengo el identificador del préstamo.
    *
    * @return id del préstamo.
    */
@@ -58,7 +58,7 @@ public class Loan {
   }
 
   /**
-   * Asigna el identificador del préstamo.
+   * Asigno el identificador del préstamo.
    *
    * @param id identificador.
    */
@@ -67,7 +67,7 @@ public class Loan {
   }
 
   /**
-   * Obtiene el id del usuario asociado al préstamo.
+   * Obtengo el id del usuario asociado.
    *
    * @return id del usuario.
    */
@@ -76,7 +76,7 @@ public class Loan {
   }
 
   /**
-   * Asigna el id del usuario asociado al préstamo.
+   * Asigno el id del usuario asociado.
    *
    * @param userId id del usuario.
    */
@@ -85,7 +85,7 @@ public class Loan {
   }
 
   /**
-   * Obtiene el id del libro asociado al préstamo.
+   * Obtengo el id del libro asociado.
    *
    * @return id del libro.
    */
@@ -94,7 +94,7 @@ public class Loan {
   }
 
   /**
-   * Asigna el id del libro asociado al préstamo.
+   * Asigno el id del libro asociado.
    *
    * @param bookId id del libro.
    */
@@ -103,16 +103,16 @@ public class Loan {
   }
 
   /**
-   * Obtiene la fecha en que se hizo el préstamo.
+   * Obtengo la fecha en que se hizo el préstamo.
    *
-   * @return fecha de préstamo.
+   * @return fecha del préstamo.
    */
   public LocalDate getLoanDate() {
     return loanDate;
   }
 
   /**
-   * Asigna la fecha de préstamo.
+   * Asigno la fecha del préstamo.
    *
    * @param loanDate fecha del préstamo.
    */
@@ -121,7 +121,7 @@ public class Loan {
   }
 
   /**
-   * Obtiene la fecha de devolución.
+   * Obtengo la fecha de devolución.
    *
    * @return fecha de devolución, o {@code null} si aún no se devuelve.
    */
@@ -130,7 +130,7 @@ public class Loan {
   }
 
   /**
-   * Asigna la fecha de devolución.
+   * Asigno la fecha de devolución.
    *
    * @param returnDate fecha de devolución.
    */
@@ -139,16 +139,16 @@ public class Loan {
   }
 
   /**
-   * Indica si el préstamo fue devuelto.
+   * Pregunto si el préstamo ya fue devuelto.
    *
-   * @return {@code true} si ya fue devuelto.
+   * @return {@code true} si está devuelto.
    */
   public boolean isReturned() {
     return returned;
   }
 
   /**
-   * Define si el préstamo fue devuelto.
+   * Marco el préstamo como devuelto o pendiente.
    *
    * @param returned nuevo estado.
    */
@@ -157,7 +157,7 @@ public class Loan {
   }
 
   /**
-   * Obtiene el nombre del usuario, usado solo para mostrar en pantalla.
+   * Obtengo el nombre del usuario para mostrarlo en pantalla.
    *
    * @return nombre del usuario.
    */
@@ -166,16 +166,16 @@ public class Loan {
   }
 
   /**
-   * Asigna el nombre del usuario para mostrarlo en las vistas.
+   * Asigno el nombre del usuario.
    *
-   * @param userName nombre del usuario.
+   * @param userName nombre visible.
    */
   public void setUserName(String userName) {
     this.userName = userName;
   }
 
   /**
-   * Obtiene el título del libro, usado solo para mostrar en pantalla.
+   * Obtengo el título del libro para mostrarlo en pantalla.
    *
    * @return título del libro.
    */
@@ -184,9 +184,9 @@ public class Loan {
   }
 
   /**
-   * Asigna el título del libro para mostrarlo en las vistas.
+   * Asigno el título del libro.
    *
-   * @param bookTitle título del libro.
+   * @param bookTitle título visible.
    */
   public void setBookTitle(String bookTitle) {
     this.bookTitle = bookTitle;

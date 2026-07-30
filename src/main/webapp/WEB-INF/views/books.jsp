@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Catalogo - Biblioteca Digital UNTEC</title>
+    <title>Catálogo - Biblioteca Digital UNTEC</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
@@ -17,7 +17,7 @@
 
 <main class="container py-4">
     <section class="page-header d-flex justify-content-between align-items-center flex-wrap gap-2 mb-4">
-        <h2 class="m-0">Catalogo de libros</h2>
+        <h2 class="m-0">Catálogo de libros</h2>
         <c:if test="${sessionScope.user != null && sessionScope.user.isLibrarian()}">
             <a class="btn btn-primary" href="${pageContext.request.contextPath}/books?action=new">Registrar libro</a>
         </c:if>
@@ -34,14 +34,14 @@
             <div class="alert alert-success" role="alert">El libro fue eliminado correctamente.</div>
         </c:when>
         <c:when test="${param.error == 'forbidden'}">
-            <div class="alert alert-danger" role="alert">No tiene permisos para realizar esa accion.</div>
+            <div class="alert alert-danger" role="alert">No tiene permisos para realizar esa acción.</div>
         </c:when>
     </c:choose>
 
     <c:choose>
         <c:when test="${empty books}">
             <div class="card border-dashed text-center p-5 text-muted">
-                <p class="m-0">Aun no hay libros registrados en la biblioteca.</p>
+                <p class="m-0">Aún no hay libros registrados en la biblioteca.</p>
             </div>
         </c:when>
         <c:otherwise>
@@ -84,7 +84,7 @@
                                                 <input type="hidden" name="action" value="delete">
                                                 <input type="hidden" name="id" value="${book.id}">
                                                 <button type="submit" class="btn btn-danger btn-sm"
-                                                        onclick="return confirm('Esta seguro de eliminar este libro?');">
+                                                        onclick="return confirm('¿Está seguro de eliminar este libro?');">
                                                     Eliminar
                                                 </button>
                                             </form>

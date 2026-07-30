@@ -17,7 +17,7 @@
 
 <main class="container py-4">
     <section class="page-header mb-4">
-        <h2 class="m-0">Registrar prestamo</h2>
+        <h2 class="m-0">Registrar préstamo</h2>
     </section>
 
     <c:if test="${not empty errorMessage}">
@@ -60,7 +60,7 @@
             <div class="d-flex justify-content-end gap-2">
                 <button type="submit" class="btn btn-primary"
                         <c:if test="${empty books}">disabled</c:if>>
-                    Registrar prestamo
+                    Registrar préstamo
                 </button>
                 <a class="btn btn-outline-secondary" href="${pageContext.request.contextPath}/loans?action=list">Cancelar</a>
             </div>

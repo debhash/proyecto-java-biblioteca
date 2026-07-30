@@ -1,9 +1,9 @@
 # Biblioteca Digital UNTEC
 
-Aplicacion web academica para administrar una biblioteca digital universitaria.
-Desarrollada con Jakarta EE 10 (Servlets + JSP + JSTL), JDBC, H2 y patron MVC + DAO.
+Armé esta aplicación web para administrar una biblioteca digital universitaria.
+La construí con Jakarta EE, JSP, JSTL, JDBC, H2 y una estructura MVC + DAO para que todo quede más ordenado y fácil de seguir.
 
-## Tecnologias utilizadas
+## Tecnologías que estoy usando
 
 - Java 25 LTS
 - Jakarta EE 10
@@ -12,70 +12,70 @@ Desarrollada con Jakarta EE 10 (Servlets + JSP + JSTL), JDBC, H2 y patron MVC + 
 - Jakarta Standard Tag Library (JSTL) 3.0
 - JDBC
 - H2 Database 2.2 (modo archivo)
-- Apache Maven 3.9 o superior (requerido para compilar con Java 25)
+- Apache Maven 3.9 o superior
 - Apache Tomcat 10.1
 - HTML + Bootstrap 5
 
-## Requisitos previos
+## Lo que necesito antes de correrlo
 
-- **JDK 25 LTS** (Temurin, Oracle, Zulu u otro) instalado y configurado en `PATH` y `JAVA_HOME`.
-  Apache Maven 3.9 o superior (3.9.16 es la version minima verificada con este proyecto).
-- Apache Tomcat 10.1.x (soporta el namespace `jakarta.*` y se ejecuta correctamente sobre JDK 25).
+- **JDK 25 LTS** instalado y configurado en `PATH` y `JAVA_HOME`.
+- **Apache Maven 3.9 o superior**. Yo lo probé con 3.9.16.
+- **Apache Tomcat 10.1.x** para desplegar la aplicación con `jakarta.*`.
 
-## Estructura de paquetes
+## Cómo está organizado el proyecto
 
-```
+```text
 src/main/java/cl/untec/library
-├── controller/   # Servlets (LoginServlet, LogoutServlet, BookServlet, LoanServlet)
-├── dao/          # Acceso a datos con JDBC (UserDAO, BookDAO, LoanDAO)
-├── filter/       # Filtros (AuthenticationFilter)
-├── model/        # POJOs (User, Book, Loan)
-└── util/         # Utilidades (DatabaseConnection, DbInitializer)
+├── controller/   # Servlets: LoginServlet, LogoutServlet, BookServlet, LoanServlet
+├── dao/          # Acceso a datos con JDBC: UserDAO, BookDAO, LoanDAO
+├── filter/       # Filtros: AuthenticationFilter
+├── model/        # POJOs: User, Book, Loan
+└── util/         # Utilidades: DatabaseConnection, DbInitializer
 ```
 
 ## Modelo de datos
 
 ### Tabla `app_user`
 
-| Campo    | Tipo            | Descripcion                 |
-| -------- | --------------- | --------------------------- |
-| id       | BIGINT PK       | Identificador unico         |
-| name     | VARCHAR(100)    | Nombre completo             |
-| email    | VARCHAR(120) UK | Email de acceso             |
-| password | VARCHAR(100)    | Contrasena (solo academico) |
-| role     | VARCHAR(20)     | LIBRARIAN o STUDENT         |
+| Campo    | Tipo            | Descripción             |
+| -------- | --------------- | ----------------------- |
+| id       | BIGINT PK       | Identificador único     |
+| name     | VARCHAR(100)    | Nombre completo         |
+| email    | VARCHAR(120) UK | Correo de acceso        |
+| password | VARCHAR(100)    | Contraseña              |
+| role     | VARCHAR(20)     | `LIBRARIAN` o `STUDENT` |
 
 ### Tabla `book`
 
-| Campo     | Tipo         | Descripcion                   |
-| --------- | ------------ | ----------------------------- |
-| id        | BIGINT PK    | Identificador unico           |
-| title     | VARCHAR(200) | Titulo del libro              |
-| author    | VARCHAR(150) | Autor                         |
-| isbn      | VARCHAR(50)  | Codigo ISBN                   |
-| available | BOOLEAN      | true si esta en la biblioteca |
+| Campo     | Tipo         | Descripción                |
+| --------- | ------------ | -------------------------- |
+| id        | BIGINT PK    | Identificador único        |
+| title     | VARCHAR(200) | Título del libro           |
+| author    | VARCHAR(150) | Autor                      |
+| isbn      | VARCHAR(50)  | Código ISBN                |
+| available | BOOLEAN      | `true` si se puede prestar |
 
 ### Tabla `loan`
 
-| Campo       | Tipo      | Descripcion                          |
-| ----------- | --------- | ------------------------------------ |
-| id          | BIGINT PK | Identificador unico                  |
-| user_id     | BIGINT FK | Usuario que solicita el prestamo     |
-| book_id     | BIGINT FK | Libro prestado                       |
-| loan_date   | DATE      | Fecha del prestamo                   |
-| return_date | DATE NULL | Fecha en que se devolvio (si aplica) |
-| returned    | BOOLEAN   | true cuando se devolvio              |
+| Campo       | Tipo      | Descripción                         |
+| ----------- | --------- | ----------------------------------- |
+| id          | BIGINT PK | Identificador único                 |
+| user_id     | BIGINT FK | Usuario que solicita el préstamo    |
+| book_id     | BIGINT FK | Libro prestado                      |
+| loan_date   | DATE      | Fecha del préstamo                  |
+| return_date | DATE NULL | Fecha en que se devolvió, si aplica |
+| returned    | BOOLEAN   | `true` cuando ya se devolvió        |
 
 ## Credenciales de prueba
 
-| Rol       | Email            | Contrasena      |
+| Rol       | Email            | Contraseña      |
 | --------- | ---------------- | --------------- |
 | LIBRARIAN | `luis@untec.cl`  | `admin123`      |
 | STUDENT   | `bruce@untec.cl` | `estudiante123` |
 
-## Generar el archivo WAR
+## Cómo generar el WAR
 
-Desde la raiz del proyecto:
+Desde la raíz del proyecto:
 
 ```bash
 mvn clean package
@@ -83,62 +83,52 @@ mvn clean package
 
 El archivo generado queda en:
 
-```
+```text
 target/digital-library.war
 ```
 
-## Desplegar con Docker
+## Cómo desplegar con Docker
 
-El proyecto incluye un `Dockerfile` multi-stage y un `docker-compose.yml`
-para construir y ejecutar la aplicacion en un contenedor sin necesidad de
-tener instalado JDK 25 ni Tomcat en el equipo host.
+Dejé un `Dockerfile` multi-stage y un `docker-compose.yml` para correr la aplicación sin instalar Tomcat ni JDK en la máquina local.
 
-### Requisitos previos
+### Requisitos para Docker
 
 - **Docker Engine 24.0 o superior**.
-- **Docker Compose v2** (incluido como `docker compose` en Docker Desktop
-  y en la mayoria de distribuciones Linux modernas).
+- **Docker Compose v2**.
 
-> El primer build descarga aproximadamente 1 GB entre la imagen base de
-> Maven, el JDK 25 y Tomcat 10.1. Las builds posteriores reutilizan la
-> cache de capas y demoran significativamente menos.
+### Opción recomendada: Docker Compose
 
-### Construir y ejecutar con Docker Compose (recomendado)
-
-Desde la raiz del proyecto:
+Desde la raíz del proyecto:
 
 ```bash
 docker compose up -d --build
 ```
 
-Este comando:
+Con eso:
 
-1. Construye la imagen segun el `Dockerfile` (compila el WAR y lo despliega
-   en Tomcat 10.1 sobre JDK 25).
-2. Levanta el servicio `library` en segundo plano.
-3. Crea el volumen `library_data` para persistir la base H2.
+1. Compilo el WAR.
+2. Levanto Tomcat 10.1 con JDK 25.
+3. Dejo la base H2 persistiéndose en el volumen `library_data`.
 
-Para ver los logs en tiempo real:
+Para ver los logs:
 
 ```bash
 docker compose logs -f library
 ```
 
-Para detener el servicio:
+Para detener todo:
 
 ```bash
 docker compose down
 ```
 
-### Construir y ejecutar con Docker (forma manual)
-
-Si prefiere usar los comandos `docker` directamente:
+### Opción manual con Docker
 
 ```bash
 # Construir la imagen
 docker build -t digital-library:0.0.2 .
 
-# Crear un volumen para persistir la base de datos
+# Crear el volumen para la base
 docker volume create library_data
 
 # Ejecutar el contenedor
@@ -149,7 +139,7 @@ docker run -d \
     digital-library:0.0.2
 ```
 
-Comandos utiles:
+Comandos útiles:
 
 ```bash
 # Ver logs
@@ -158,37 +148,32 @@ docker logs -f digital-library
 # Detener el contenedor
 docker stop digital-library
 
-# Eliminar el contenedor (conservando el volumen con los datos)
+# Eliminar el contenedor
 docker rm digital-library
 
 # Reiniciar el contenedor
 docker restart digital-library
 ```
 
-> Si elimina el volumen con `docker volume rm library_data`, los datos
-> de la biblioteca (usuarios, libros y prestamos) se perderan de forma
-> permanente.
+Si borro el volumen con `docker volume rm library_data`, se pierden los datos guardados en la base.
 
-### Acceso a la aplicacion
+### Acceso a la aplicación
 
-Una vez que el contenedor este corriendo, la aplicacion queda disponible en:
+Cuando el contenedor está arriba, puedo acceder desde:
 
 - `http://localhost:8080/digital-library`
 
-El puerto `8080` del contenedor se mapea al `8080` del host. Para cambiarlo
-edite la linea `ports` del `docker-compose.yml` o el flag `-p` del comando
-`docker run`.
+Si quiero cambiar el puerto, edito la línea `ports` del `docker-compose.yml` o uso el flag `-p` al correr `docker run`.
 
-### Personalizacion
+### Personalización
 
-Variables de entorno utiles que pueden definirse en el bloque
-`environment` del `docker-compose.yml` o con `-e` en `docker run`:
+Variables útiles que puedo definir en `docker-compose.yml` o con `-e` en `docker run`:
 
-| Variable    | Default   | Descripcion                                   |
+| Variable    | Default   | Descripción                                   |
 | ----------- | --------- | --------------------------------------------- |
-| `JAVA_OPTS` | _(vacio)_ | Flags de JVM, por ejemplo `-Xms256m -Xmx512m` |
+| `JAVA_OPTS` | _(vacío)_ | Flags de JVM, por ejemplo `-Xms256m -Xmx512m` |
 
-Ejemplo aplicado al `docker-compose.yml`:
+Ejemplo:
 
 ```yaml
 services:
@@ -205,51 +190,46 @@ services:
 
 ### Limpieza completa
 
-Para eliminar la imagen, el contenedor y el volumen (deja el sistema como
-si nunca se hubiera desplegado):
-
 ```bash
 docker compose down --rmi all -v
 ```
 
-## Desplegar en Apache Tomcat
+## Cómo desplegar en Apache Tomcat
 
-### Opcion A: copiar el WAR a la carpeta `webapps`
+### Opción A: copiar el WAR a `webapps`
 
-1. Asegurarse de que `JAVA_HOME` y `JRE_HOME` de Tomcat apunten al JDK 25.
-2. Detener Tomcat (`bin/shutdown.sh` o desde el `Services` panel en Windows).
-3. Copiar `target/digital-library.war` a la carpeta `webapps` de Tomcat.
-4. Iniciar Tomcat (`bin/startup.sh` o `bin/startup.bat`).
-5. Acceder desde el navegador a:
+1. Verifico que `JAVA_HOME` y `JRE_HOME` apunten al JDK 25.
+2. Detengo Tomcat.
+3. Copio `target/digital-library.war` a la carpeta `webapps`.
+4. Inicio Tomcat.
+5. Entro a:
    - `http://localhost:8080/digital-library/`
 
-### Opcion B: mediante Tomcat Manager
+### Opción B: usar Tomcat Manager
 
-1. Configurar un usuario con rol `manager-gui` en `conf/tomcat-users.xml`.
-2. Iniciar Tomcat y entrar a `http://localhost:8080/manager/html`.
-3. En la seccion `WAR file to deploy`, seleccionar `digital-library.war`.
-4. Presionar `Deploy`.
-5. Acceder a la aplicacion desde el enlace mostrado en la lista.
+1. Configuro un usuario con rol `manager-gui`.
+2. Entro a `http://localhost:8080/manager/html`.
+3. En `WAR file to deploy`, selecciono `digital-library.war`.
+4. Hago clic en `Deploy`.
+5. Uso el enlace que me muestra Tomcat.
 
-## Patron MVC
+## Cómo entiendo la arquitectura
 
-- **Modelo**: clases POJO en `cl.untec.library.model`.
-- **Vista**: JSP + JSTL en `src/main/webapp/WEB-INF/views/`. No contienen codigo Java ni JDBC.
-- **Controlador**: Servlets en `cl.untec.library.controller` reciben la peticion HTTP, llaman a los DAO y reenvian a la vista correspondiente con `RequestDispatcher`.
-- **Acceso a datos**: DAOs en `cl.untec.library.dao` que usan JDBC a traves de `DatabaseConnection`.
+- **Modelo**: mis clases POJO en `cl.untec.library.model`.
+- **Vista**: mis JSP + JSTL en `src/main/webapp/WEB-INF/views/`.
+- **Controlador**: mis Servlets en `cl.untec.library.controller`.
+- **Acceso a datos**: mis DAO con JDBC en `cl.untec.library.dao`.
 
-## Patron DAO
+## Cómo estoy usando DAO
 
-Cada tabla tiene su propio DAO que centraliza todas las consultas SQL:
-
-- `UserDAO`: buscar por credenciales, por id, listar estudiantes.
+- `UserDAO`: login, búsqueda por id y listado de estudiantes.
 - `BookDAO`: listar, buscar, crear, actualizar, eliminar y cambiar disponibilidad.
-- `LoanDAO`: listar, listar por usuario, registrar prestamo y devolucion (con transaccion JDBC).
+- `LoanDAO`: listar, listar por usuario, registrar préstamo y devolución con transacción JDBC.
 
 ## Transacciones JDBC
 
-`LoanDAO.registerLoan` y `LoanDAO.registerReturn` desactivan el auto-commit, ejecutan dos operaciones (insertar/marcar devuelto y actualizar disponibilidad) y hacen `commit`/`rollback` segun corresponda, garantizando que no queden datos inconsistentes.
+`LoanDAO.registerLoan` y `LoanDAO.registerReturn` trabajan con `commit` y `rollback` para que no queden datos a medias.
 
 ## Despliegue y acceso
 
-La aplicacion se despliega como archivo `WAR` en Apache Tomcat 10.1. El acceso publico queda centrado en `/login` y `index.jsp`, mientras que las rutas principales requieren sesion activa en los servlets.
+La aplicación se despliega como archivo `WAR` en Apache Tomcat 10.1. Dejo el acceso público centrado en `/login` e `index.jsp`, y las rutas principales quedan protegidas por sesión en los servlets.

@@ -1,8 +1,8 @@
 package cl.untec.library.model;
 
 /**
- * Representa un libro del catálogo de la biblioteca digital.
- * Se usa tanto para listar libros como para crear, editar y eliminar registros.
+ * Esta clase representa un libro del catálogo.
+ * Me sirve para listar, crear, editar y borrar registros de la biblioteca.
  */
 public class Book {
 
@@ -13,12 +13,12 @@ public class Book {
   private boolean available;
 
   /**
-   * Constructor vacío requerido para completar formularios y mapear datos de forma simple.
+   * Dejo este constructor vacío para poder armar objetos desde formularios y consultas SQL.
    */
   public Book() {}
 
   /**
-   * Crea un libro con todos sus datos principales.
+   * Creo un libro con sus datos principales.
    *
    * @param id identificador interno.
    * @param title título del libro.
@@ -41,7 +41,7 @@ public class Book {
   }
 
   /**
-   * Obtiene el identificador del libro.
+   * Obtengo el identificador del libro.
    *
    * @return id interno.
    */
@@ -50,7 +50,7 @@ public class Book {
   }
 
   /**
-   * Asigna el identificador del libro.
+   * Asigno el identificador del libro.
    *
    * @param id nuevo identificador.
    */
@@ -59,7 +59,7 @@ public class Book {
   }
 
   /**
-   * Obtiene el título del libro.
+   * Obtengo el título del libro.
    *
    * @return título.
    */
@@ -68,7 +68,7 @@ public class Book {
   }
 
   /**
-   * Asigna el título del libro.
+   * Asigno el título del libro.
    *
    * @param title título.
    */
@@ -77,7 +77,7 @@ public class Book {
   }
 
   /**
-   * Obtiene el autor del libro.
+   * Obtengo el autor del libro.
    *
    * @return autor.
    */
@@ -86,7 +86,7 @@ public class Book {
   }
 
   /**
-   * Asigna el autor del libro.
+   * Asigno el autor del libro.
    *
    * @param author autor.
    */
@@ -95,7 +95,7 @@ public class Book {
   }
 
   /**
-   * Obtiene el ISBN del libro.
+   * Obtengo el ISBN del libro.
    *
    * @return ISBN.
    */
@@ -104,7 +104,7 @@ public class Book {
   }
 
   /**
-   * Asigna el ISBN del libro.
+   * Asigno el ISBN del libro.
    *
    * @param isbn ISBN.
    */
@@ -113,7 +113,7 @@ public class Book {
   }
 
   /**
-   * Indica si el libro está disponible.
+   * Pregunto si el libro está disponible.
    *
    * @return {@code true} si se puede prestar.
    */
@@ -122,7 +122,7 @@ public class Book {
   }
 
   /**
-   * Define si el libro está disponible.
+   * Marco si el libro está disponible o no.
    *
    * @param available nuevo estado.
    */

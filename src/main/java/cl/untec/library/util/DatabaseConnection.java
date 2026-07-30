@@ -8,8 +8,7 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 /**
- * Centraliza la creación de conexiones JDBC para la base de datos H2.
- * Se apoya en el archivo {@code database.properties} que vive en resources.
+ * Centralizo acá la creación de conexiones JDBC para no repetir la configuración en varios lados.
  */
 public final class DatabaseConnection {
 
@@ -19,9 +18,9 @@ public final class DatabaseConnection {
   private DatabaseConnection() {}
 
   /**
-   * Obtiene una conexión JDBC lista para usar.
+   * Obtengo una conexión abierta contra la base configurada.
    *
-   * @return conexión abierta contra la base configurada.
+   * @return conexión JDBC lista para usar.
    * @throws SQLException si no se puede abrir la conexión.
    */
   public static Connection getConnection() throws SQLException {
@@ -33,9 +32,9 @@ public final class DatabaseConnection {
   }
 
   /**
-   * Carga las propiedades de conexión desde el classpath.
+   * Cargo las propiedades de base de datos desde el classpath.
    *
-   * @return propiedades de base de datos.
+   * @return propiedades de conexión.
    */
   private static Properties loadProperties() {
     Properties properties = new Properties();

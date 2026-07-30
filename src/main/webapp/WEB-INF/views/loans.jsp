@@ -17,29 +17,29 @@
 
 <main class="container py-4">
     <section class="page-header d-flex justify-content-between align-items-center flex-wrap gap-2 mb-4">
-        <h2 class="m-0">Listado de prestamos</h2>
+        <h2 class="m-0">Listado de préstamos</h2>
         <a class="btn btn-primary" href="${pageContext.request.contextPath}/loans?action=new">Registrar prestamo</a>
     </section>
 
     <c:choose>
         <c:when test="${param.success == 'created'}">
-            <div class="alert alert-success" role="alert">El prestamo fue registrado correctamente.</div>
+            <div class="alert alert-success" role="alert">El préstamo fue registrado correctamente.</div>
         </c:when>
         <c:when test="${param.success == 'returned'}">
-            <div class="alert alert-success" role="alert">La devolucion fue registrada correctamente.</div>
+            <div class="alert alert-success" role="alert">La devolución fue registrada correctamente.</div>
         </c:when>
         <c:when test="${param.error == 'alreadyReturned'}">
-            <div class="alert alert-danger" role="alert">El prestamo ya se encontraba devuelto.</div>
+            <div class="alert alert-danger" role="alert">El préstamo ya se encontraba devuelto.</div>
         </c:when>
         <c:when test="${param.error == 'invalid'}">
-            <div class="alert alert-danger" role="alert">Solicitud invalida.</div>
+            <div class="alert alert-danger" role="alert">Solicitud inválida.</div>
         </c:when>
     </c:choose>
 
     <c:choose>
         <c:when test="${empty loans}">
             <div class="card text-center p-5 text-muted">
-                <p class="m-0">Aun no se han registrado prestamos.</p>
+                <p class="m-0">Aún no se han registrado préstamos.</p>
             </div>
         </c:when>
         <c:otherwise>
@@ -51,8 +51,8 @@
                             <th>ID</th>
                             <th>Estudiante</th>
                             <th>Libro</th>
-                            <th>Fecha prestamo</th>
-                            <th>Fecha devolucion</th>
+                            <th>Fecha préstamo</th>
+                            <th>Fecha devolución</th>
                             <th>Estado</th>
                             <th class="text-end">Acciones</th>
                         </tr>
@@ -63,8 +63,8 @@
                                 <td data-label="ID">${loan.id}</td>
                                 <td data-label="Estudiante"><c:out value="${loan.userName}"/></td>
                                 <td data-label="Libro"><c:out value="${loan.bookTitle}"/></td>
-                                <td data-label="Fecha prestamo">${loan.loanDate}</td>
-                                <td data-label="Fecha devolucion">
+                                <td data-label="Fecha préstamo">${loan.loanDate}</td>
+                                <td data-label="Fecha devolución">
                                     <c:choose>
                                         <c:when test="${loan.returnDate != null}">
                                             ${loan.returnDate}

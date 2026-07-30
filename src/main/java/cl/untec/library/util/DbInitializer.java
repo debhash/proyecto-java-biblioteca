@@ -12,14 +12,14 @@ import java.sql.Statement;
 import org.h2.tools.RunScript;
 
 /**
- * Inicializa la base de datos al arrancar la aplicación.
- * Primero crea la estructura con {@code schema.sql} y luego carga datos de prueba con {@code data.sql} si corresponde.
+ * Listener para levantar la base de datos apenas parte la aplicación.
+ * Primero dejo lista la estructura y, si la base está vacía, cargo los datos iniciales.
  */
 @WebListener
 public class DbInitializer implements ServletContextListener {
 
   /**
-   * Se ejecuta al levantar el contexto de la aplicación.
+   * Se ejecuta cuando arranca el contexto de la aplicación.
    *
    * @param sce evento de inicialización del contexto.
    */
@@ -41,8 +41,7 @@ public class DbInitializer implements ServletContextListener {
   }
 
   /**
-   * Se ejecuta al detener el contexto de la aplicación.
-   * En este proyecto no requiere limpieza especial.
+   * No necesito hacer limpieza especial al cerrar la aplicación.
    *
    * @param sce evento de destrucción del contexto.
    */
@@ -50,11 +49,11 @@ public class DbInitializer implements ServletContextListener {
   public void contextDestroyed(ServletContextEvent sce) {}
 
   /**
-   * Ejecuta un script SQL que vive en el classpath.
+   * Ejecuto un script SQL que vive en el classpath.
    *
    * @param connection conexión JDBC activa.
    * @param resourceName nombre del script a ejecutar.
-   * @throws Exception si el recurso no existe o falla la ejecución.
+   * @throws Exception si el recurso no existe o si falla la ejecución.
    */
   private void executeScript(Connection connection, String resourceName)
     throws Exception {
@@ -79,12 +78,12 @@ public class DbInitializer implements ServletContextListener {
   }
 
   /**
-   * Indica si una tabla no tiene registros.
+   * Reviso si una tabla está vacía.
    *
    * @param connection conexión JDBC activa.
-   * @param tableName nombre de la tabla a revisar.
-   * @return {@code true} si la tabla está vacía.
-   * @throws Exception si ocurre un error de SQL.
+   * @param tableName nombre de la tabla.
+   * @return {@code true} si no tiene filas.
+   * @throws Exception si ocurre un problema con SQL.
    */
   private boolean isTableEmpty(Connection connection, String tableName)
     throws Exception {

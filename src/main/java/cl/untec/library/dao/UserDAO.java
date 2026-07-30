@@ -8,12 +8,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 /**
- * DAO encargado de consultar usuarios en la base de datos.
- * Se usa para autenticación, búsqueda por id y selección de estudiantes en el flujo de préstamos.
+ * DAO para conversar con la tabla de usuarios.
+ * Me ayuda con el login, con la búsqueda por id y con el listado de estudiantes para los préstamos.
  */
 public class UserDAO {
 
@@ -25,13 +26,40 @@ public class UserDAO {
     "SELECT id, name, email, role FROM app_user WHERE role = ? ORDER BY name";
 
   /**
-   * Busca un usuario por correo y contraseña.
+   * Busco un usuario por correo y contraseña.
+   *
+   * <p>
+   * En esta versión dejo la contraseña en texto plano para no enredar el flujo.
+   * TODO: más adelante conviene cambiar esto por hash + salt.
+   * </p>
    *
    * @param email correo del usuario.
-   * @param password contraseña en texto plano para este proyecto educativo.
+   * @param password contraseña en texto plano.
    * @return usuario encontrado o vacío si no coincide.
    */
   public Optional<User> findByEmailAndPassword(String email, String password) {
+    return findByEmailAndPassword(
+      email,
+      password == null ? new char[0] : password.toCharArray()
+    );
+  }
+
+  /**
+   * Busco un usuario por correo y una contraseña que solo vive un momento en memoria.
+   *
+   * <p>
+   * TODO: más adelante conviene pasar a hash + salt.
+   * </p>
+   *
+   * @param email correo del usuario.
+   * @param passwordChars contraseña temporal en memoria.
+   * @return usuario encontrado o vacío si no coincide.
+   */
+  public Optional<User> findByEmailAndPassword(
+    String email,
+    char[] passwordChars
+  ) {
+    String password = new String(passwordChars);
     try (
       Connection connection = DatabaseConnection.getConnection();
       PreparedStatement statement = connection.prepareStatement(
@@ -50,12 +78,14 @@ public class UserDAO {
         "Error al buscar usuario por credenciales.",
         ex
       );
+    } finally {
+      Arrays.fill(passwordChars, '\0');
     }
     return Optional.empty();
   }
 
   /**
-   * Busca un usuario por su identificador.
+   * Busco un usuario por su identificador.
    *
    * @param id identificador interno del usuario.
    * @return usuario encontrado o vacío si no existe.
@@ -78,7 +108,7 @@ public class UserDAO {
   }
 
   /**
-   * Lista los usuarios con rol estudiante.
+   * Listo los usuarios con rol estudiante.
    *
    * @return listado de estudiantes ordenado por nombre.
    */
@@ -103,7 +133,7 @@ public class UserDAO {
   }
 
   /**
-   * Convierte una fila de la tabla app_user en un objeto User.
+   * Convierto una fila de la tabla app_user en un objeto User.
    *
    * @param resultSet resultado de la consulta.
    * @return usuario mapeado.

@@ -3,7 +3,8 @@ package cl.untec.library.model;
 import java.util.Objects;
 
 /**
- * Representa a un usuario de la biblioteca digital.
+ * Esta clase representa a una persona que entra al sistema.
+ * Me sirve para autenticar, guardar la sesión y saber qué puede hacer cada usuario.
  */
 public class User {
 
@@ -13,12 +14,12 @@ public class User {
   private final Role role;
 
   /**
-   * Crea una instancia de usuario con los datos esenciales.
+   * Creo un usuario con los datos esenciales para moverlo por la aplicación.
    *
    * @param id identificador interno del usuario.
-   * @param name nombre completo del usuario.
+   * @param name nombre completo.
    * @param email correo de acceso.
-   * @param role rol asignado dentro de la aplicación.
+   * @param role rol dentro del sistema.
    */
   public User(long id, String name, String email, Role role) {
     this.id = id;
@@ -28,16 +29,16 @@ public class User {
   }
 
   /**
-   * Obtiene el identificador del usuario.
+   * Obtengo el identificador interno.
    *
-   * @return id interno.
+   * @return id del usuario.
    */
   public long getId() {
     return id;
   }
 
   /**
-   * Obtiene el nombre completo del usuario.
+   * Obtengo el nombre completo.
    *
    * @return nombre visible.
    */
@@ -46,16 +47,16 @@ public class User {
   }
 
   /**
-   * Obtiene el correo del usuario.
+   * Obtengo el correo de acceso.
    *
-   * @return correo de acceso.
+   * @return correo del usuario.
    */
   public String getEmail() {
     return email;
   }
 
   /**
-   * Obtiene el rol del usuario.
+   * Obtengo el rol asignado.
    *
    * @return rol interno.
    */
@@ -64,18 +65,18 @@ public class User {
   }
 
   /**
-   * Indica si el usuario tiene perfil de bibliotecario.
+   * Pregunto si esta persona tiene perfil de bibliotecario.
    *
-   * @return {@code true} si es bibliotecario; {@code false} en caso contrario.
+   * @return {@code true} si el rol es bibliotecario.
    */
   public boolean isLibrarian() {
     return role == Role.LIBRARIAN;
   }
 
   /**
-   * Devuelve la etiqueta visible del rol para la interfaz.
+   * Devuelvo el nombre amigable del rol para mostrarlo en la interfaz.
    *
-   * @return nombre amigable del rol.
+   * @return etiqueta visible del rol.
    */
   public String getRoleLabel() {
     return role.getLabel();
