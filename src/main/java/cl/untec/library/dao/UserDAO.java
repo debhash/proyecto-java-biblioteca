@@ -8,12 +8,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 /**
- * DAO encargado de consultar usuarios en la base de datos.
- * Se usa para autenticación, búsqueda por id y selección de estudiantes en el flujo de préstamos.
+ * DAO que nos ayuda a conversar con la tabla de usuarios.
+ * Aquí dejamos las consultas de inicio de sesión, búsqueda por id y listado de estudiantes para los préstamos.
  */
 public class UserDAO {
 
@@ -27,11 +28,38 @@ public class UserDAO {
   /**
    * Busca un usuario por correo y contraseña.
    *
+   * <p>
+   * En esta versión de clase dejamos la contraseña en texto plano para no complicar.
+   * TODO: más adelante conviene cambiar esto por hash + salt.
+   * </p>
+   *
    * @param email correo del usuario.
-   * @param password contraseña en texto plano para este proyecto educativo.
+   * @param password contraseña en texto plano.
    * @return usuario encontrado o vacío si no coincide.
    */
   public Optional<User> findByEmailAndPassword(String email, String password) {
+    return findByEmailAndPassword(
+      email,
+      password == null ? new char[0] : password.toCharArray()
+    );
+  }
+
+  /**
+   * Busca un usuario por correo y contraseña que viene solo por un momento en memoria.
+   *
+   * <p>
+   * TODO: más adelante conviene pasar a hash + salt.
+   * </p>
+   *
+   * @param email correo del usuario.
+   * @param passwordChars contraseña temporal en memoria.
+   * @return usuario encontrado o vacío si no coincide.
+   */
+  public Optional<User> findByEmailAndPassword(
+    String email,
+    char[] passwordChars
+  ) {
+    String password = new String(passwordChars);
     try (
       Connection connection = DatabaseConnection.getConnection();
       PreparedStatement statement = connection.prepareStatement(
@@ -50,6 +78,8 @@ public class UserDAO {
         "Error al buscar usuario por credenciales.",
         ex
       );
+    } finally {
+      Arrays.fill(passwordChars, '\0');
     }
     return Optional.empty();
   }

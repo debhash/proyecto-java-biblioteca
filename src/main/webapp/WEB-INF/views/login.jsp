@@ -34,6 +34,7 @@
                 <div class="mb-3">
                     <label for="password" class="form-label fw-semibold">Contrasena</label>
                     <input type="password" class="form-control" id="password" name="password" required>
+                    <!-- TODO: conviene guardar las contraseñas con hash + salt, pero no lo complejizare más -->
                 </div>
                 <button type="submit" class="btn btn-primary w-100">Ingresar</button>
             </form>
