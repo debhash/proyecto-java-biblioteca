@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Mis prestamos - Biblioteca Digital UNTEC</title>
+    <title>Mis préstamos - Biblioteca Digital UNTEC</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
@@ -17,15 +17,15 @@
 
 <main class="container py-4">
     <section class="page-header mb-4">
-        <h2 class="m-0">Mis prestamos</h2>
+        <h2 class="m-0">Mis préstamos</h2>
     </section>
 
     <c:choose>
         <c:when test="${empty loans}">
             <div class="card text-center p-5">
-                <p class="text-muted mb-3">Aun no tienes prestamos registrados.</p>
+                <p class="text-muted mb-3">Aún no tienes préstamos registrados.</p>
                 <a class="btn btn-primary" href="${pageContext.request.contextPath}/books?action=list">
-                    Explorar catalogo
+                    Explorar catálogo
                 </a>
             </div>
         </c:when>
@@ -36,8 +36,8 @@
                         <thead>
                         <tr>
                             <th>Libro</th>
-                            <th>Fecha prestamo</th>
-                            <th>Fecha devolucion</th>
+                            <th>Fecha préstamo</th>
+                            <th>Fecha devolución</th>
                             <th>Estado</th>
                         </tr>
                         </thead>
@@ -45,8 +45,8 @@
                         <c:forEach var="loan" items="${loans}">
                             <tr>
                                 <td data-label="Libro"><c:out value="${loan.bookTitle}"/></td>
-                                <td data-label="Fecha prestamo">${loan.loanDate}</td>
-                                <td data-label="Fecha devolucion">
+                                <td data-label="Fecha préstamo">${loan.loanDate}</td>
+                                <td data-label="Fecha devolución">
                                     <c:choose>
                                         <c:when test="${loan.returnDate != null}">
                                             ${loan.returnDate}

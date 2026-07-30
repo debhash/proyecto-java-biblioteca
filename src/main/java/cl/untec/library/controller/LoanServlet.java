@@ -13,9 +13,8 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
- * Servlet encargado de gestionar préstamos y devoluciones.
- * El bibliotecario puede listar todos los préstamos, registrar uno nuevo y marcar devoluciones.
- * El estudiante solo puede ver sus propios préstamos.
+ * Servlet para mover todo lo que tiene que ver con préstamos y devoluciones.
+ * El bibliotecario ve el panorama completo y el estudiante solo mira sus propios movimientos.
  */
 @WebServlet("/loans")
 public class LoanServlet extends HttpServlet {
@@ -25,7 +24,7 @@ public class LoanServlet extends HttpServlet {
   private final BookDAO bookDAO = new BookDAO();
 
   /**
-   * Atiende peticiones GET para listar préstamos o mostrar el formulario de creación.
+   * Atiendo las peticiones GET para mostrar listados o abrir el formulario de préstamo.
    *
    * @param request petición HTTP.
    * @param response respuesta HTTP.
@@ -86,7 +85,7 @@ public class LoanServlet extends HttpServlet {
   }
 
   /**
-   * Atiende peticiones POST para registrar préstamos y devoluciones.
+   * Atiendo las peticiones POST para registrar préstamos y devoluciones.
    *
    * @param request petición HTTP con los datos del formulario.
    * @param response respuesta HTTP.
@@ -166,7 +165,7 @@ public class LoanServlet extends HttpServlet {
   }
 
   /**
-   * Verifica si la sesión actual tiene un usuario autenticado.
+   * Reviso si la sesión actual tiene un usuario autenticado.
    *
    * @param session sesión HTTP activa.
    * @return {@code true} si hay usuario en sesión.
@@ -176,7 +175,7 @@ public class LoanServlet extends HttpServlet {
   }
 
   /**
-   * Convierte un parámetro textual a Long de forma segura.
+   * Convierto un valor textual a Long de forma segura.
    *
    * @param value valor recibido por parámetro.
    * @return número convertido o {@code null} si no se puede parsear.

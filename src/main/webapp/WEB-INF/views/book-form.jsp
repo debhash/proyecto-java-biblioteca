@@ -56,7 +56,7 @@
             <div class="mb-4 form-check">
                 <input type="checkbox" class="form-check-input" id="available" name="available" value="true"
                        <c:if test="${book.available || !isEdit}">checked</c:if>>
-                <label class="form-check-label" for="available">Disponible para prestamo</label>
+                <label class="form-check-label" for="available">Disponible para préstamo</label>
             </div>
 
             <div class="d-flex justify-content-end gap-2">

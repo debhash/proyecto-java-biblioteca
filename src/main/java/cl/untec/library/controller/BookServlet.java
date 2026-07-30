@@ -12,8 +12,8 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
- * Servlet encargado de gestionar el catálogo de libros.
- * Permite listar, crear, editar y eliminar libros, validando que solo el bibliotecario pueda modificar datos.
+ * Servlet para mover todo lo que tiene que ver con libros.
+ * Aquí listo, creo, edito y elimino registros, cuidando que solo el bibliotecario pueda hacer cambios.
  */
 @WebServlet("/books")
 public class BookServlet extends HttpServlet {
@@ -21,7 +21,7 @@ public class BookServlet extends HttpServlet {
   private final BookDAO bookDAO = new BookDAO();
 
   /**
-   * Atiende peticiones GET para listar libros o mostrar el formulario de creación/edición.
+   * Atiendo las peticiones GET para mostrar el catálogo o abrir el formulario de libro.
    *
    * @param request petición HTTP.
    * @param response respuesta HTTP.
@@ -98,7 +98,7 @@ public class BookServlet extends HttpServlet {
   }
 
   /**
-   * Atiende peticiones POST para crear, actualizar o eliminar libros.
+   * Atiendo las peticiones POST para guardar, actualizar o borrar libros.
    *
    * @param request petición HTTP con los datos del formulario.
    * @param response respuesta HTTP.
@@ -180,7 +180,7 @@ public class BookServlet extends HttpServlet {
   }
 
   /**
-   * Construye un objeto Book a partir de los campos del formulario.
+   * Armo un libro con los datos que vienen desde el formulario.
    *
    * @param request petición HTTP con los datos del formulario.
    * @return instancia de Book lista para persistirse.
@@ -195,7 +195,7 @@ public class BookServlet extends HttpServlet {
   }
 
   /**
-   * Verifica si la sesión actual tiene un usuario autenticado.
+   * Reviso si la sesión actual tiene un usuario autenticado.
    *
    * @param session sesión HTTP activa.
    * @return {@code true} si hay usuario en sesión.
@@ -205,10 +205,10 @@ public class BookServlet extends HttpServlet {
   }
 
   /**
-   * Convierte un valor textual a Long de forma segura.
+   * Convierto un texto a Long de forma segura.
    *
    * @param value valor recibido por parámetro.
-   * @return número convertido o {@code null} si el dato no es válido.
+   * @return número convertido o {@code null} si no se puede parsear.
    */
   private Long parseLong(String value) {
     try {

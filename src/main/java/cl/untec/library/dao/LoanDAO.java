@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * DAO encargado de la tabla loan.
- * Sus operaciones de préstamo y devolución se ejecutan dentro de transacciones JDBC para evitar datos inconsistentes.
+ * DAO para mover lo que tiene que ver con préstamos.
+ * Me encargo de listar, registrar y devolver libros sin dejar la lógica SQL repartida por otros lados.
  */
 public class LoanDAO {
 
@@ -31,7 +31,7 @@ public class LoanDAO {
     "UPDATE loan SET return_date = ?, returned = TRUE WHERE id = ?";
 
   /**
-   * Lista todos los préstamos del sistema.
+   * Listo todos los préstamos del sistema.
    *
    * @return listado de préstamos con datos de usuario y libro.
    */
@@ -52,7 +52,7 @@ public class LoanDAO {
   }
 
   /**
-   * Lista los préstamos de un usuario específico.
+   * Listo los préstamos de una persona específica.
    *
    * @param userId id del usuario.
    * @return préstamos asociados al usuario.
@@ -78,7 +78,7 @@ public class LoanDAO {
   }
 
   /**
-   * Registra un préstamo nuevo y baja la disponibilidad del libro en la misma transacción.
+   * Registro un préstamo nuevo y bajo la disponibilidad del libro en la misma transacción.
    *
    * @param userId id del usuario que toma el préstamo.
    * @param bookId id del libro a prestar.
@@ -118,7 +118,7 @@ public class LoanDAO {
   }
 
   /**
-   * Registra la devolución de un préstamo y vuelve a dejar disponible el libro.
+   * Registro la devolución de un préstamo y vuelvo a dejar disponible el libro.
    *
    * @param loanId id del préstamo.
    * @return {@code true} si la devolución se registró con éxito.
@@ -171,7 +171,7 @@ public class LoanDAO {
   }
 
   /**
-   * Convierte una fila con joins en un objeto Loan con datos legibles para la vista.
+   * Convierto una fila con joins en un préstamo listo para mostrar en pantalla.
    *
    * @param resultSet resultado de la consulta.
    * @return préstamo mapeado.
@@ -185,7 +185,7 @@ public class LoanDAO {
   }
 
   /**
-   * Convierte una fila básica de loan en un objeto Loan.
+   * Convierto una fila básica de loan en un objeto Loan.
    *
    * @param resultSet resultado de la consulta.
    * @return préstamo mapeado.

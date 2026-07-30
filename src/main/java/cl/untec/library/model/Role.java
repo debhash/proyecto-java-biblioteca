@@ -1,16 +1,17 @@
 package cl.untec.library.model;
 
 /**
- * Representa los roles disponibles en la aplicación de biblioteca digital.
+ * Enum para representar los roles que puede tener una persona dentro de la biblioteca digital.
+ * En esta aplicación solo manejo dos perfiles: bibliotecario y estudiante.
  */
 public enum Role {
   LIBRARIAN,
   STUDENT;
 
   /**
-   * Devuelve el nombre visible del rol para mostrarlo en la interfaz.
+   * Convierto el rol técnico en una etiqueta más amable para mostrarla en pantalla.
    *
-   * @return etiqueta del rol.
+   * @return nombre visible del rol.
    */
   public String getLabel() {
     return switch (this) {

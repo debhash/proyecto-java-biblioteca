@@ -8,14 +8,13 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
- * Servlet responsable de cerrar la sesión del usuario.
- * Invalida la sesión activa y devuelve a la pantalla de inicio de sesión.
+ * Servlet para cerrar la sesión y volver al login.
  */
 @WebServlet("/logout")
 public class LogoutServlet extends HttpServlet {
 
   /**
-   * Invalida la sesión actual y redirige al login.
+   * Invalido la sesión actual y luego mando al usuario de vuelta al login.
    *
    * @param request petición HTTP.
    * @param response respuesta HTTP.

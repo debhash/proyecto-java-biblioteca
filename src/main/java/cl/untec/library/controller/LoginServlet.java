@@ -13,8 +13,8 @@ import java.util.Arrays;
 import java.util.Optional;
 
 /**
- * Servlet que maneja el inicio de sesión.
- * Recibe los datos del formulario, revisa si calzan y guarda al usuario en la sesión cuando todo está bien.
+ * Servlet para recibir el login y dejar andando la sesión del usuario.
+ * Si todo calza, el sistema lo manda al catálogo; si no, le muestro el formulario otra vez.
  */
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
@@ -22,7 +22,7 @@ public class LoginServlet extends HttpServlet {
   private final UserDAO userDAO = new UserDAO();
 
   /**
-   * Muestra el formulario de inicio de sesión.
+   * Muestro el formulario de inicio de sesión.
    *
    * @param request petición HTTP entrante.
    * @param response respuesta HTTP hacia el navegador.
@@ -38,8 +38,7 @@ public class LoginServlet extends HttpServlet {
   }
 
   /**
-   * Procesa el formulario de login y autentica al usuario contra la base de datos.
-   * Si las credenciales son válidas, guarda al usuario en sesión y lo manda al catálogo.
+   * Reviso las credenciales del formulario y, si están correctas, dejo al usuario autenticado.
    *
    * @param request petición HTTP con email y contraseña.
    * @param response respuesta HTTP hacia el navegador.

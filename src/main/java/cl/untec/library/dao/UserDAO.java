@@ -13,8 +13,8 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * DAO que nos ayuda a conversar con la tabla de usuarios.
- * Aquí dejamos las consultas de inicio de sesión, búsqueda por id y listado de estudiantes para los préstamos.
+ * DAO para conversar con la tabla de usuarios.
+ * Me ayuda con el login, con la búsqueda por id y con el listado de estudiantes para los préstamos.
  */
 public class UserDAO {
 
@@ -26,10 +26,10 @@ public class UserDAO {
     "SELECT id, name, email, role FROM app_user WHERE role = ? ORDER BY name";
 
   /**
-   * Busca un usuario por correo y contraseña.
+   * Busco un usuario por correo y contraseña.
    *
    * <p>
-   * En esta versión de clase dejamos la contraseña en texto plano para no complicar.
+   * En esta versión dejo la contraseña en texto plano para no enredar el flujo.
    * TODO: más adelante conviene cambiar esto por hash + salt.
    * </p>
    *
@@ -45,7 +45,7 @@ public class UserDAO {
   }
 
   /**
-   * Busca un usuario por correo y contraseña que viene solo por un momento en memoria.
+   * Busco un usuario por correo y una contraseña que solo vive un momento en memoria.
    *
    * <p>
    * TODO: más adelante conviene pasar a hash + salt.
@@ -85,7 +85,7 @@ public class UserDAO {
   }
 
   /**
-   * Busca un usuario por su identificador.
+   * Busco un usuario por su identificador.
    *
    * @param id identificador interno del usuario.
    * @return usuario encontrado o vacío si no existe.
@@ -108,7 +108,7 @@ public class UserDAO {
   }
 
   /**
-   * Lista los usuarios con rol estudiante.
+   * Listo los usuarios con rol estudiante.
    *
    * @return listado de estudiantes ordenado por nombre.
    */
@@ -133,7 +133,7 @@ public class UserDAO {
   }
 
   /**
-   * Convierte una fila de la tabla app_user en un objeto User.
+   * Convierto una fila de la tabla app_user en un objeto User.
    *
    * @param resultSet resultado de la consulta.
    * @return usuario mapeado.
