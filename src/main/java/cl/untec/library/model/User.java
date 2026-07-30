@@ -4,7 +4,6 @@ import java.util.Objects;
 
 /**
  * Representa a un usuario de la biblioteca digital.
- * En esta versión educativa el usuario se usa para autenticación, sesión y autorización básica.
  */
 public class User {
 

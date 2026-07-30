@@ -2,7 +2,6 @@ package cl.untec.library.model;
 
 /**
  * Representa los roles disponibles en la aplicación de biblioteca digital.
- * En este proyecto educativo solo se usan dos perfiles: bibliotecario y estudiante.
  */
 public enum Role {
   LIBRARIAN,
@@ -11,7 +10,7 @@ public enum Role {
   /**
    * Devuelve el nombre visible del rol para mostrarlo en la interfaz.
    *
-   * @return etiqueta en español chileno del rol.
+   * @return etiqueta del rol.
    */
   public String getLabel() {
     return switch (this) {
